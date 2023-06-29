@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg width='850' height='165' viewBox='0 0 850 165' xmlns='http://www.w3.org/2000/svg'>
+<text text-anchor='end' x='40' y='30'><tspan font-weight='bold' font-size='25'>9</tspan></text>
+<rect x='50' y='10' width='70' height='25' style='fill:rgb(0, 0, 255)' />
+<text text-anchor='end' x='40' y='60'><tspan font-weight='bold' font-size='25'>29</tspan></text>
+<rect x='50' y='40' width='230' height='25' style='fill:rgb(0, 255, 0)' />
+<text text-anchor='end' x='40' y='90'><tspan font-weight='bold' font-size='25'>94</tspan></text>
+<rect x='50' y='70' width='760' height='25' style='fill:rgb(255, 0, 0)' />
+<text text-anchor='end' x='40' y='120'><tspan font-weight='bold' font-size='25'>4</tspan></text>
+<rect x='50' y='100' width='30' height='25' style='fill:rgb(255, 0, 255)' />
+<text text-anchor='end' x='40' y='150'><tspan font-weight='bold' font-size='25'>6</tspan></text>
+<rect x='50' y='130' width='40' height='25' style='fill:rgb(255, 255, 0)' />
+</svg>
