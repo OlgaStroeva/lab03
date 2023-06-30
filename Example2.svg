@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg width='850' height='170' viewBox='0 0 850 170' xmlns='http://www.w3.org/2000/svg'>
+<text text-anchor='end' x='40' y='30'><tspan font-weight='bold' font-size='25'>38</tspan></text>
+<rect x='50' y='10' width='320' height='25' style='fill:rgb(0, 0, 255)' />
+<text text-anchor='end' x='40' y='60'><tspan font-weight='bold' font-size='25'>89</tspan></text>
+<rect x='50' y='40' width='760' height='25' style='fill:rgb(0, 255, 0)' />
+<text text-anchor='end' x='40' y='90'><tspan font-weight='bold' font-size='25'>9</tspan></text>
+<rect x='50' y='70' width='70' height='25' style='fill:rgb(255, 0, 0)' />
+<text text-anchor='end' x='40' y='120'><tspan font-weight='bold' font-size='25'>6</tspan></text>
+<rect x='50' y='100' width='50' height='25' style='fill:rgb(255, 0, 255)' />
+<line x1='50' y1='130' x2='50' y2='155' stroke='black' stroke-width='2'/><text text-anchor='end' x='50' y='167.5'><tspan font-weight='bold' font-size='20'>0</tspan></text>
+<line x1='140' y1='130' x2='140' y2='155' stroke='black' stroke-width='2'/><text text-anchor='end' x='140' y='167.5'><tspan font-weight='bold' font-size='20'>9</tspan></text>
+<line x1='230' y1='130' x2='230' y2='155' stroke='black' stroke-width='2'/><line x1='320' y1='130' x2='320' y2='155' stroke='black' stroke-width='2'/><line x1='410' y1='130' x2='410' y2='155' stroke='black' stroke-width='2'/><line x1='500' y1='130' x2='500' y2='155' stroke='black' stroke-width='2'/><line x1='590' y1='130' x2='590' y2='155' stroke='black' stroke-width='2'/><line x1='680' y1='130' x2='680' y2='155' stroke='black' stroke-width='2'/><line x1='770' y1='130' x2='770' y2='155' stroke='black' stroke-width='2'/><line x1='810' y1='130' x2='810' y2='155' stroke='black' stroke-width='2'/><text text-anchor='end' x='810' y='167.5'><tspan font-weight='bold' font-size='20'>76</tspan></text>
+<line x1='50' y1='142.5' x2='810' y2='145' stroke='black' stroke-width='2'/></svg>
