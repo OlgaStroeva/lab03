@@ -20,17 +20,14 @@ void find_minmax(const vector<double>& numbers, double &min, double &max) {
 const size_t HeightOfColumn = 25, Scale = 10; //scale = one char; border height = scale; space between columns = scale/2
 
 //for first task
-size_t ChooseYourColor(){
-  string color;
-  cerr << "WARNING! You can choose only 5 colors: green, blue, pink, yellow, cyan.\n You can't choose red! Remember - here is no red color!\n";
-  restart:
-  getline(cin, color);
+size_t ChooseYourColor(string color){
+
   if(color == "green") return 1;
   else if(color == "blue") return 0;
   else if(color == "pink") return 3;
   else if(color == "yellow") return 4;
   else if(color == "cyan") return 5;
-  else goto restart;
+  else return 6;
 }
 
 void Scale_under_image(const size_t max_count, size_t bin_count){ //Code for task 15.
@@ -63,6 +60,7 @@ void draw_histogram_svg(const vector<size_t>& bins){
           max_count = count;
       }
   }
+
   const bool scaling_needed = max_count > MAX_ASTERISK;
   const double scaling_factor = (double)MAX_ASTERISK / max_count;
   const size_t bin_count = bins.size();
@@ -94,7 +92,7 @@ void draw_histogram_svg(const vector<size_t>& bins){
 
 
   //here we print the second task
-  //cout << "<text text-anchor='middle' x='"<< (SCREEN_WIDTH+5)*Scale/2 <<"' y='" << (bin_count * (HeightOfColumn+Scale/2) + Scale*1.5)/2 + Scale
+  //cout << "<text text-anchor='middle' x='"<< (SCREEN_WIDTH+5)*Scale/2 <<"' y='" << (bin_count * (HeightOfColumn+Scale/2) + Scale*5)/2 + Scale
   //     << "'><tspan font-weight='bold' font-size='" << HeightOfColumn << "'>Гистограмма</tspan></text>\n";
 
 

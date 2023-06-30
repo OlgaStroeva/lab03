@@ -75,18 +75,19 @@ void show_histogram_text(const vector<size_t>& bins){
 const size_t HeightOfColumn = 25, Scale = 10; //scale = one char; border height = scale; space between columns = scale/2
 
 //for first task
-size_t ChooseYourColor(){
-  string color;
-  cerr << "WARNING! You can choose only 5 colors: green, blue, pink, yellow, cyan.\n You can't choose red! Remember - here is no red color!\n";
-  restart:
-  getline(cin, color);
-  if(color == "green") return 1;
-  else if(color == "blue") return 0;
-  else if(color == "pink") return 3;
-  else if(color == "yellow") return 4;
-  else if(color == "cyan") return 5;
-  else goto restart;
-}
+//size_t ChooseYourColor(){
+//  string color;
+//  cerr << "WARNING! You can choose only 5 colors: green, blue, pink, yellow, cyan.\n You can't choose red! Remember - here is no red color!\n";
+//  restart:
+//  getline(cin, color);
+
+//  if(color == "green") return 1;
+//  else if(color == "blue") return 0;
+//  else if(color == "pink") return 3;
+//  else if(color == "yellow") return 4;
+//  else if(color == "cyan") return 5;
+//  else goto restart;
+//}
 
 void Scale_under_image(const size_t max_count, size_t bin_count){ //Code for task 15.
   size_t scale;
@@ -108,35 +109,6 @@ void Scale_under_image(const size_t max_count, size_t bin_count){ //Code for tas
   cout << "<line x1='" << Scale*5  << "' y1='" << (HeightOfColumn+Scale/2)*bin_count + HeightOfColumn*0.9 << "' x2='" <<
           Scale*(5 + min(MAX_ASTERISK, (max_count - max_count%scale + scale*(max_count%scale ? 1 : 0 )))) << "' y2='" <<
           (HeightOfColumn+Scale/2)*bin_count + HeightOfColumn << "' stroke='black' stroke-width='2'/>";
-
-
-
-
-
-  /*string scale_line;
-  scale_line += "   ";
-  for(size_t i = 0; i <= MAX_ASTERISK && i <= max_count - max_count%scale + scale*(max_count%scale ? 1 : 0 ) ; ++i){
-      if(i%scale && i< MAX_ASTERISK){
-          scale_line += '-';
-        }
-      else {
-          scale_line += '|';
-        }
-    }
-  cout << "<text text-anchor='start' x='" << Scale*4.6 << "' y='" << (HeightOfColumn+Scale/2)*bin_count + Scale << "'><tspan font-weight='bold' font-size='"
-       << Scale*3.2 << "'>";
-
-  cout << scale_line ;
-  cout << "</tspan></text>\n";
-  cout << "<text x='" << Scale*4.6 << "' y='" << (HeightOfColumn+Scale/2)*(bin_count+1) + Scale << "'><tspan font-weight='bold' font-size='"
-       << Scale*3.2 << "'>"
-       << '\n' << "0" << setfill('_') << setw(scale) << scale;
-  if(max_count>MAX_ASTERISK)
-    cout << setfill('_') << setw(MAX_ASTERISK-scale) << MAX_ASTERISK << '\n';
-  else if (max_count != scale)
-    cout << setfill('_') << setw(max_count - max_count%scale + scale*(max_count%scale ? 1 : 0 ) - scale)
-                                << max_count - max_count%scale + scale*(max_count%scale ? 1 : 0 ) <<'\n';
-  cout << "</tspan></text>\n";*/
 }
 
 
