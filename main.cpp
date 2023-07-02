@@ -75,19 +75,19 @@ void show_histogram_text(const vector<size_t>& bins){
 const size_t HeightOfColumn = 25, Scale = 10; //scale = one char; border height = scale; space between columns = scale/2
 
 //for first task
-//size_t ChooseYourColor(){
-//  string color;
-//  cerr << "WARNING! You can choose only 5 colors: green, blue, pink, yellow, cyan.\n You can't choose red! Remember - here is no red color!\n";
-//  restart:
-//  getline(cin, color);
+size_t ChooseYourColor(){
+  string color;
+  cerr << "WARNING! You can choose only 5 colors: green, blue, pink, yellow, cyan.\n You can't choose red! Remember - here is no red color!\n";
+  restart:
+  getline(cin, color);
 
-//  if(color == "green") return 1;
-//  else if(color == "blue") return 0;
-//  else if(color == "pink") return 3;
-//  else if(color == "yellow") return 4;
-//  else if(color == "cyan") return 5;
-//  else goto restart;
-//}
+  if(color == "green") return 1;
+  else if(color == "blue") return 0;
+  else if(color == "pink") return 3;
+  else if(color == "yellow") return 4;
+  else if(color == "cyan") return 5;
+  else goto restart;
+}
 
 void Scale_under_image(const size_t max_count, size_t bin_count){ //Code for task 15.
   size_t scale;
