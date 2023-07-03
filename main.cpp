@@ -174,37 +174,34 @@ void draw_histogram_svg(const vector<size_t>& bins, size_t scale){
   cout << "</svg>";
 }
 
+std::stringstream error_stream;
+
 size_t write_data(void* items, size_t item_size, size_t item_count, void* ctx) {
     auto data_size = item_size * item_count;
-
-    std::stringstream* buffer = reinterpret_cast<std::stringstream*>(ctx);
-
-    buffer->write(reinterpret_cast<const char*>(items), data_size);
-
+    error_stream.write(reinterpret_cast<const char*>(items), data_size);
     return data_size;
 }
 
-
 Input download(const std::string& address) {
-    std::stringstream buffer;
     CURL* curl = curl_easy_init();
     double connect = 0;
     if (curl) {
         CURLcode res;
         curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
         res = curl_easy_perform(curl);
         if (res != CURLE_OK) {
             std::cout << "curl_easy_perform() failed"  << "\n";
             exit(1);
         }
         res = curl_easy_getinfo(curl, CURLINFO_CONNECT_TIME, &connect);
-        std::cerr << connect << "\n";
         curl_easy_cleanup(curl);
     }
 
-    return read_input(buffer, false);
+    // Output the stringstream contents to cerr
+    std::cerr << error_stream.str();
+
+    return read_input(error_stream, false);
 }
 
 int main(int argc, char* argv[]) {
