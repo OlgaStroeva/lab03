@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/project.dir/main.cpp.o  -o project  -lcurl /usr/lib/x86_64-linux-gnu/libQt6Network.so.6.2.2 /usr/lib/x86_64-linux-gnu/libQt6Core.so.6.2.2 -pthread 

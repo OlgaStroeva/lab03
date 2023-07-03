@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/olga/project/main.cpp
+iostream
+-
+vector
+-
+sstream
+-
+string
+-
+curl/curl.h
+/home/olga/project/curl/curl.h
+

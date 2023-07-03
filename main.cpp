@@ -1,16 +1,44 @@
 #include <iostream>
 #include <vector>
-//#include "histogram.h"
-#include <iomanip>
+#include <sstream>
+#include <string>
+#include "curl/curl.h"
+
 
 using namespace std;
 
-vector<long double> input_numbers(size_t count) {
+const size_t SCREEN_WIDTH = 80;
+const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
+const size_t HeightOfColumn = 25, Scale = 10; //scale = one char; border height = scale; space between columns = scale/2
+
+struct Input {
+  vector<long double> numbers;
+  size_t bin_count;
+  size_t scale;
+};
+
+vector<long double> input_numbers(istream& in, size_t count) {
   vector<long double> result(count);
   for (size_t i = 0; i < count; i++) {
-    cin >> result[i];
+    in >> result[i];
   }
   return result;
+}
+
+Input read_input(istream& in, bool promt) {
+  Input data;
+  if(promt) cerr << "Enter number count: ";
+  size_t number_count;
+  in >> number_count;
+  if(promt) cerr << "Enter numbers: ";
+  data.numbers = input_numbers(in, number_count);
+  if(promt) cerr << "Enter column count: ";
+  in >> data.bin_count;
+  in >> data.scale;
+  if(data.scale<2 || data.scale>9) {
+      cerr << "ERROR";
+    }
+return data;
 }
 
 void find_minmax(const vector<long double>& numbers, long double &min, long double &max) {
@@ -24,22 +52,19 @@ void find_minmax(const vector<long double>& numbers, long double &min, long doub
     }
 }
 
-vector<size_t> build_histogram(const vector<long double>& numbers, const size_t bin_count){
-  long double min = numbers[0], max = numbers[0];
-  find_minmax(numbers, min, max);
-  vector<size_t> bins(bin_count);
-  for (double number : numbers) {
-      size_t bin = (size_t)((number - min) / (max - min) * bin_count);
-      if (bin == bin_count) {
+vector<size_t> build_histogram(const Input &data){
+  long double min = data.numbers[0], max = data.numbers[0];
+  find_minmax(data.numbers, min, max);
+  vector<size_t> bins(data.bin_count);
+  for (double number : data.numbers) {
+      size_t bin = (size_t)((number - min) / (max - min) * data.bin_count);
+      if (bin == data.bin_count) {
           bin--;
       }
       bins[bin]++;
   }
   return bins;
 }
-
-const size_t SCREEN_WIDTH = 80;
-const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
 
 void show_histogram_text(const vector<size_t>& bins){
   size_t max_count = 0;
@@ -72,8 +97,6 @@ void show_histogram_text(const vector<size_t>& bins){
   }
 }
 
-const size_t HeightOfColumn = 25, Scale = 10; //scale = one char; border height = scale; space between columns = scale/2
-
 //for first task
 size_t ChooseYourColor(){
   string color;
@@ -89,14 +112,7 @@ size_t ChooseYourColor(){
   else goto restart;
 }
 
-void Scale_under_image(const size_t max_count, size_t bin_count){ //Code for task 15.
-  size_t scale;
-  repeat:
-  cin >> scale;
-  if(scale<2 || scale>9) {
-      cerr << "ERROR";
-      goto repeat;
-    }
+void Scale_under_image(const size_t max_count, size_t bin_count, size_t scale){ //Code for task 15.
   for(size_t i = 0; i <= MAX_ASTERISK && i <= max_count - max_count%scale + scale*(max_count%scale ? 1 : 0 ) ; ++i){
       if(!(i%scale) || i==MAX_ASTERISK) {
           cout << "<line x1='" << Scale*(5+i)  << "' y1='" << (HeightOfColumn+Scale/2)*bin_count + Scale << "' x2='" <<
@@ -111,8 +127,7 @@ void Scale_under_image(const size_t max_count, size_t bin_count){ //Code for tas
           (HeightOfColumn+Scale/2)*bin_count + HeightOfColumn << "' stroke='black' stroke-width='2'/>";
 }
 
-
-void draw_histogram_svg(const vector<size_t>& bins){
+void draw_histogram_svg(const vector<size_t>& bins, size_t scale){
   size_t max_count = 0, i = 0;
   for (size_t count : bins) {
       if (count > max_count) {
@@ -145,7 +160,7 @@ void draw_histogram_svg(const vector<size_t>& bins){
     ++i;
     }
   //Task for 15th variant
-  Scale_under_image(max_count, bin_count);
+  Scale_under_image(max_count, bin_count, scale);
 
 
 
@@ -159,25 +174,49 @@ void draw_histogram_svg(const vector<size_t>& bins){
   cout << "</svg>";
 }
 
-int main() {
-    // Ввод данных
-    size_t number_count;
-    cerr << "Enter number count: ";
-    cin >> number_count;
+size_t write_data(void* items, size_t item_size, size_t item_count, void* ctx) {
+    auto data_size = item_size * item_count;
 
-    cerr << "Enter numbers: ";
-    const auto numbers = input_numbers(number_count);
+    std::stringstream* buffer = reinterpret_cast<std::stringstream*>(ctx);
 
-    size_t bin_count;
-    cerr << "Enter column count: ";
-    cin >> bin_count;
+    buffer->write(reinterpret_cast<const char*>(items), data_size);
 
-    // Обработка данных
-    auto bins = build_histogram(numbers, bin_count);
+    return data_size;
+}
 
-    // Вывод данных
-    //show_histogram_text(bins);
-    draw_histogram_svg(bins);
 
+Input download(const std::string& address) {
+    std::stringstream buffer;
+    CURL* curl = curl_easy_init();
+    double connect = 0;
+    if (curl) {
+        CURLcode res;
+        curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
+        res = curl_easy_perform(curl);
+        if (res != CURLE_OK) {
+            std::cout << "curl_easy_perform() failed"  << "\n";
+            exit(1);
+        }
+        res = curl_easy_getinfo(curl, CURLINFO_CONNECT_TIME, &connect);
+        std::cerr << connect << "\n";
+        curl_easy_cleanup(curl);
+    }
+
+    return read_input(buffer, false);
+}
+
+int main(int argc, char* argv[]) {
+  Input input;
+  if (argc > 1) {
+    input = download(argv[1]);
+  } else {
+    input = read_input(cin, true);
+  }
+
+  //const auto input = read_input(cin, true);
+  const auto bins = build_histogram(input);
+  draw_histogram_svg(bins, input.scale);
     return 0;
 }

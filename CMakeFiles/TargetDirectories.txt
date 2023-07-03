@@ -1,0 +1,3 @@
+/home/olga/project/CMakeFiles/rebuild_cache.dir
+/home/olga/project/CMakeFiles/edit_cache.dir
+/home/olga/project/CMakeFiles/project.dir
